@@ -33,7 +33,7 @@ class GeminiCodeExplainer:
 
         self.base_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent"
         
-        if not self.api_key:
+        if not self.gemini_api_key:
             st.error("GEMINI_API_KEY not found in environment variables!")
             st.stop()
     
