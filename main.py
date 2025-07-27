@@ -23,12 +23,19 @@ st.set_page_config(
 class GeminiCodeExplainer:
     def __init__(self):
         """Initialize the Code Explainer with Gemini API"""
+
+        # Try loading from .env first
         self.api_key = os.getenv("GEMINI_API_KEY")
-        self.base_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent"
-        
+
+        # If not found, prompt user
         if not self.api_key:
-            st.error("GEMINI_API_KEY not found in environment variables!")
-            st.stop()
+            st.warning("GEMINI_API_KEY not found in environment variables or .env file.")
+            self.api_key = st.text_input("Enter your Gemini API Key:", type="password")
+
+            if not self.api_key:
+                st.stop()  # Stop app until key is entered
+
+        self.base_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent"
     
     def query_gemini(self, prompt: str, max_tokens: int = 1000) -> str:
         """Query Gemini API with a prompt"""
