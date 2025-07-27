@@ -17,10 +17,10 @@ st.set_page_config(
 )
 
 # Prompt user for the Gemini API key at the very beginning
-api_key = st.text_input("Enter your Gemini API Key:", type="password")
+gemini_api_key = st.text_input("Enter your Gemini API Key:", type="password")
 
 # If no API key is entered yet, show warning and stop
-if not api_key:
+if not gemini_api_key:
     st.warning("Please enter your Gemini API key to proceed.")
     st.stop()
 
@@ -780,7 +780,7 @@ def main():
     st.sidebar.header("🔧 Configuration")
     
     # API Key status
-    gemini_api_key = os.getenv("GEMINI_API_KEY")
+    
     if gemini_api_key:
         st.sidebar.success("✅ Gemini API Key loaded from environment")
     else:
