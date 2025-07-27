@@ -16,15 +16,20 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Prompt user for the Gemini API key at the very beginning
+api_key = st.text_input("Enter your Gemini API Key:", type="password")
+
+# If no API key is entered yet, show warning and stop
+if not api_key:
+    st.warning("Please enter your Gemini API key to proceed.")
+    st.stop()
+
+
+
 class GeminiCodeExplainer:
     def __init__(self):
         """Initialize the Code Explainer with Gemini API"""
-        self.api_key = st.text_input("Enter your Gemini API Key:", type="password")
-
-    # If key is not entered, stop the app
-        if not self.api_key:
-            st.warning("API key is required to proceed.")
-            st.stop()
+        
 
         self.base_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent"
         
