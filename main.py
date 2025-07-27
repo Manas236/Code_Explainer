@@ -7,10 +7,7 @@ from typing import Dict, List, Tuple, Optional
 import time
 import threading
 from concurrent.futures import ThreadPoolExecutor
-from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
 
 # Configure Streamlit page
 st.set_page_config(
