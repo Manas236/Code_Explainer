@@ -7,7 +7,10 @@ from typing import Dict, List, Tuple, Optional
 import time
 import threading
 from concurrent.futures import ThreadPoolExecutor
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
 
 # Configure Streamlit page
 st.set_page_config(
@@ -18,18 +21,20 @@ st.set_page_config(
 )
 
 class GeminiCodeExplainer:
-   def __init__(self):
-    """Initialize the Code Explainer with Gemini API"""
+    def __init__(self):
+        """Initialize the Code Explainer with Gemini API"""
+        self.api_key = st.text_input("Enter your Gemini API Key:", type="password")
 
-    st.info("Please enter your Gemini API Key to use the app.")
-    self.api_key = st.text_input("Enter your Gemini API Key:", type="password")
+    # If key is not entered, stop the app
+        if not self.api_key:
+            st.warning("API key is required to proceed.")
+            st.stop()
 
-    if not self.api_key:
-        st.warning("API key is required to proceed.")
-        st.stop()
-
-    self.base_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent"
-
+        self.base_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent"
+        
+        if not self.api_key:
+            st.error("GEMINI_API_KEY not found in environment variables!")
+            st.stop()
     
     def query_gemini(self, prompt: str, max_tokens: int = 1000) -> str:
         """Query Gemini API with a prompt"""
